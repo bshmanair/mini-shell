@@ -6,17 +6,9 @@
 
 int main(int argc, char *argv[])
 {
-    pid_t pid = fork();
-    char *args[] = {"ls", NULL};
-    if (pid == 0)
-    {
-        // Child process code
-        execvp("ls", args); // replace child process with "ls"
-    }
-    else
-    {
-        // Parent process code
-        wait(NULL); // Wait for child to finish
-        printf("Child process has finished.\n");
-    }
+    _execl(
+        "C:\\Windows\\System32\\ping.exe",
+        "C:\\Windows\\System32\\ping.exe",
+        "google.com",
+        NULL);
 }
