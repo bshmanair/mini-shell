@@ -2,14 +2,21 @@
 #include <stdlib.h>
 #include <unistd.h>    // for fork()
 #include <sys/types.h> // for pid_t
+#include <sys/wait.h>
 
 int main(int argc, char *argv[])
 {
-    pid_t id = fork();
-    // printf("Hello world from id: %d\n", id);
-    if (id == 0)
-        printf("ID of child process = %d\n", id);
+    pid_t pid = fork();
+    char *args[] = {"ls", NULL};
+    if (pid == 0)
+    {
+        // Child process code
+        execvp("ls", args); // replace child process with "ls"
+    }
     else
-        printf("ID of parent process = %d\n", id);
-    return 0;
+    {
+        // Parent process code
+        wait(NULL); // Wait for child to finish
+        printf("Child process has finished.\n");
+    }
 }
