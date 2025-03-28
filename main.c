@@ -13,7 +13,7 @@ int main()
     do
     {
         /*
-        \033[0;31m <--- start of red
+        \033[0;31m <--- start of red (red = 31)
 
         \033[0m <--- resets colors
         */
