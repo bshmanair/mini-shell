@@ -24,22 +24,22 @@ int main()
         // now making token array
         char *token = strtok(input, " "); // Points to first token
 
-        // Establish no. of tokens
+        // Establish no. of tokens (just determine the number of spaces and add 1)
         token_count = 1;
         for (int i = 0; input[i] != '\0'; i++)
         {
             if (input[i] == ' ')
                 token_count++;
         }
-        tokens = malloc(token_count * sizeof(char *));
+        tokens = malloc(token_count * sizeof(char *)); // Allocate memory to the main token array
 
         // Allocate memory then assign each token element in token array
         int i = 0;
         while (token != NULL && i < token_count)
         {
             size_t token_size = strlen(token);
-            tokens[i] = strdup(token);
-            token = strtok(NULL, " ");
+            tokens[i] = strdup(token); // Creates a copy of the token string and puts it in the tokens array
+            token = strtok(NULL, " "); // Cycling through the tokens through space delimiter
             i++;
         }
         tokens[i] = NULL;
@@ -53,8 +53,8 @@ int main()
 
         // Freeing all tokens
         for (int i = 0; i < token_count; i++)
-            free(tokens[i]);
-        free(tokens);
+            free(tokens[i]); // Free each token string space
+        free(tokens);        // Free the array of tokens
     } while (strcmp(input, "exit") != 0);
 
     printf("\nProgram executed, exiting...\n");
