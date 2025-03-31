@@ -82,6 +82,11 @@ char **tokenize(char *input)
         }
     }
     char **tokens = malloc(sizeof(char *) * (token_count + 1));
+    if (tokens == NULL) //
+    {
+        printf("Memory allocation failed");
+        return 1;
+    }
 
     char *token = strtok(input, " ");
     int i = 0;
@@ -89,6 +94,11 @@ char **tokenize(char *input)
     {
         int size = strlen(token);
         tokens[i] = malloc((size + 1) * sizeof(char));
+        if (tokens[i] == NULL)
+        {
+            printf("Memory allocation failed");
+            return 1;
+        }
         strcpy(tokens[i], token);
         i++;
         token = strtok(NULL, " ");
