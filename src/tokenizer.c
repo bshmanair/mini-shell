@@ -10,10 +10,9 @@ char **tokenize(char *input)
     for (int i = 0; input[i] != '\0'; i++)
     {
         if (input[i] == ' ')
-        {
             token_count++;
-        }
     }
+
     char **tokens = malloc(sizeof(char *) * (token_count + 1));
     if (tokens == NULL)
         print_malloc_error();
@@ -22,11 +21,18 @@ char **tokenize(char *input)
     int i = 0;
     while (token != NULL)
     {
-        tokens[i] = strdup(token);
-        i++;
+        tokens[i++] = strdup(token);
         token = strtok(NULL, " ");
     }
     tokens[i] = NULL;
-
     return tokens;
+}
+
+void free_tokens(char **tokens)
+{
+    for (int i = 0; tokens[i] != NULL; i++)
+    {
+        free(tokens[i]);
+    }
+    free(tokens);
 }
