@@ -1,62 +1,119 @@
 #include <stdio.h>
-#include <string.h>
-#include <unistd.h>
+/**
+ * Used:
+ * - fgets()
+ * - perror()
+ */
 #include <stdlib.h>
-#include <sys/types.h>
+/**
+ * Used:
+ * - malloc()
+ * - free()
+ */
+
+#include <string.h>
+/**
+ * Used:
+ * - strcmp()
+ * - strcspn()
+ * - strcpy()
+ * - strlen()
+ */
+#include <unistd.h>
+/**
+ * Used:
+ * - fork()
+ * - execvp()
+ */
 #include <sys/wait.h>
+/**
+ * Used:
+ * - wait()
+ * - waitpid()
+ */
+#include <sys/types.h>
+/**
+ * Used:
+ * - pid_t (datatype)
+ */
+
+// Functions list
+char **tokenize(char *input);
+void execute(char **tokens);
 
 int main()
 {
-    int token_count = 0;
-    char input[100] = "";
-    char **tokens = NULL;
+    char input[1024];
+    char **tokens;
+
     do
     {
-        /*
-        \033[0;31m <--- start of red (red = 31)
+        printf("my-shell $ ");
+        fgets(input, 1024, stdin);
+        input[strcspn(input, "\n")] = '\0';
+        tokens = tokenize(input);
 
-        \033[0m <--- resets colors
-        */
-        printf("\033[0;31mmini-shell>\033[0m "); // input
-        fgets(input, 100, stdin);                // accept first 100 characters
-        input[strcspn(input, "\n")] = '\0';      // remove trailing newline character
-
-        // now making token array
-        char *token = strtok(input, " "); // Points to first token
-
-        // Establish no. of tokens (just determine the number of spaces and add 1)
-        token_count = 1;
-        for (int i = 0; input[i] != '\0'; i++)
+        // Edge case: User didn't put anything
+        if (tokens[0] != NULL)
         {
-            if (input[i] == ' ')
-                token_count++;
+            execute(tokens);
         }
-        tokens = malloc(token_count * sizeof(char *)); // Allocate memory to the main token array
 
-        // Allocate memory then assign each token element in token array
-        int i = 0;
-        while (token != NULL && i < token_count)
+        // Freeing memory to prevent memory leak
+        for (int i = 0; tokens[i] != NULL; i++)
         {
-            size_t token_size = strlen(token);
-            tokens[i] = strdup(token); // Creates a copy of the token string and puts it in the tokens array
-            token = strtok(NULL, " "); // Cycling through the tokens through space delimiter
-            i++;
+            free(tokens[i]);
         }
-        tokens[i] = NULL;
+        free(tokens);
 
-        // Process management
-        pid_t process_id = fork();
-        if (process_id == 0) // Child process
-            execvp(tokens[0], tokens);
-        else
-            wait(NULL);
-
-        // Freeing all tokens
-        for (int i = 0; i < token_count; i++)
-            free(tokens[i]); // Free each token string space
-        free(tokens);        // Free the array of tokens
     } while (strcmp(input, "exit") != 0);
 
-    printf("\nProgram executed, exiting...\n");
     return 0;
+}
+
+char **tokenize(char *input)
+{
+    int token_count = 1;
+    for (int i = 0; input[i] != '\0'; i++)
+    {
+        if (input[i] == ' ')
+        {
+            token_count++;
+        }
+    }
+    char **tokens = malloc(sizeof(char *) * (token_count + 1));
+
+    char *token = strtok(input, " ");
+    int i = 0;
+    while (token != NULL)
+    {
+        int size = strlen(token);
+        tokens[i] = malloc((size + 1) * sizeof(char));
+        strcpy(tokens[i], token);
+        i++;
+        token = strtok(NULL, " ");
+    }
+    tokens[i] = NULL;
+
+    return tokens;
+}
+
+void execute(char **tokens)
+{
+    pid_t pid = fork();
+
+    if (pid == 0)
+    {
+        execvp(tokens[0], tokens);
+        printf("Child process failed to run");
+        exit(1);
+    }
+    else if (pid > 0)
+    {
+        wait(NULL);
+    }
+    else if (pid < 0)
+    {
+        perror("Fork failed");
+    }
 }
