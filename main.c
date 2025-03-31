@@ -1,45 +1,9 @@
 #include <stdio.h>
-/**
- * Used:
- * - fgets()
- * - perror()
- */
 #include <stdlib.h>
-/**
- * Used:
- * - malloc()
- * - free()
- */
-
 #include <string.h>
-/**
- * Used:
- * - strcmp()
- * - strcspn()
- * - strcpy()
- * - strlen()
- */
 #include <unistd.h>
-/**
- * Used:
- * - fork()
- * - execvp()
- */
 #include <sys/wait.h>
-/**
- * Used:
- * - wait()
- * - waitpid()
- */
 #include <sys/types.h>
-/**
- * Used:
- * - pid_t (datatype)
- */
-
-// Functions list
-char **tokenize(char *input);
-void execute(char **tokens);
 
 int main()
 {
@@ -49,7 +13,12 @@ int main()
     do
     {
         printf("my-shell $ ");
-        fgets(input, 1024, stdin);
+        // Edge case: User presses CTRL+D (check on the spot)
+        if (fgets(input, sizeof(input), stdin) == NULL)
+        {
+            printf("\n");
+            break;
+        }
         input[strcspn(input, "\n")] = '\0';
         tokens = tokenize(input);
 
@@ -59,12 +28,7 @@ int main()
             execute(tokens);
         }
 
-        // Freeing memory to prevent memory leak
-        for (int i = 0; tokens[i] != NULL; i++)
-        {
-            free(tokens[i]);
-        }
-        free(tokens);
+        free_tokens(tokens);
 
     } while (strcmp(input, "exit") != 0);
 
@@ -82,24 +46,14 @@ char **tokenize(char *input)
         }
     }
     char **tokens = malloc(sizeof(char *) * (token_count + 1));
-    if (tokens == NULL) //
-    {
-        printf("Memory allocation failed");
-        return 1;
-    }
+    if (tokens == NULL)
+        print_malloc_error();
 
     char *token = strtok(input, " ");
     int i = 0;
     while (token != NULL)
     {
-        int size = strlen(token);
-        tokens[i] = malloc((size + 1) * sizeof(char));
-        if (tokens[i] == NULL)
-        {
-            printf("Memory allocation failed");
-            return 1;
-        }
-        strcpy(tokens[i], token);
+        tokens[i] = strdup(token);
         i++;
         token = strtok(NULL, " ");
     }
@@ -112,18 +66,33 @@ void execute(char **tokens)
 {
     pid_t pid = fork();
 
-    if (pid == 0)
+    if (pid == 0) // Child process
     {
         execvp(tokens[0], tokens);
-        printf("Child process failed to run");
+        perror("my-shell");
         exit(1);
     }
-    else if (pid > 0)
+    else if (pid > 0) // Parent process
     {
         wait(NULL);
     }
-    else if (pid < 0)
+    else if (pid < 0) // Scenario: fork failed
     {
         perror("Fork failed");
     }
+}
+
+void free_tokens(char **tokens)
+{
+    for (int i = 0; tokens[i] != NULL; i++)
+    {
+        free(tokens[i]);
+    }
+    free(tokens);
+}
+
+void print_malloc_error()
+{
+    perror("malloc");
+    exit(EXIT_FAILURE);
 }
