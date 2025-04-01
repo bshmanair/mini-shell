@@ -11,7 +11,7 @@ int main()
 
     do
     {
-        printf("my-shell $ ");
+        printf("\033[0;31mmy-shell $ \033[0m");
         if (fgets(input, sizeof(input), stdin) == NULL)
         {
             printf("\n");
@@ -19,6 +19,12 @@ int main()
         }
 
         input[strcspn(input, "\n")] = '\0';
+
+        if (strcmp(input, "exit") == 0)
+        {
+            exit(EXIT_SUCCESS);
+        }
+
         tokens = tokenize(input);
 
         if (tokens[0] != NULL)
