@@ -1,13 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "../include/tokenizer.h"
 #include "../include/executor.h"
+#include "../include/init_shell.h"
 
 int main()
 {
     char input[1024];
     char **tokens;
+
+    init_shell();
 
     do
     {
@@ -34,7 +38,8 @@ int main()
 
         free_tokens(tokens);
 
-    } while (strcmp(input, "exit") != 0);
+    }
+    while (strcmp(input, "exit") != 0);
 
     return 0;
 }

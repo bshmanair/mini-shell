@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -g -Iinclude
-SRC = src/main.c src/tokenizer.c src/executor.c
+SRC = src/main.c src/tokenizer.c src/executor.c src/init_shell.c
 OUT = main
 
 all:
