@@ -12,6 +12,10 @@ int main()
     char **tokens;
 
     init_shell();
+    if (chdir("/") != 0) {
+        perror("chdir to root failed");
+        exit(EXIT_FAILURE);
+    }
 
     do
     {
