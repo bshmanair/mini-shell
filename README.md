@@ -9,3 +9,5 @@ Documentation coming soon, just listing Unix shell commands that work for now:
 - echo
 - grep
 - exit
+
+When checking it out, type "make" in the terminal while you're in this folder to make the testing file.
