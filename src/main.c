@@ -11,7 +11,7 @@ int main()
     char input[1024];
     char **tokens;
 
-    init_shell(void);
+    init_shell();
     if (chdir("/") != 0) {
         perror("chdir to root failed");
         exit(EXIT_FAILURE);
