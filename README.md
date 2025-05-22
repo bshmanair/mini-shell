@@ -9,30 +9,28 @@ Replicate the original Unix shell from the ground up for exploratory purposes.
 
 ### Key features and highlights
 1. Prompt text is colored for visual appeal.
-2. Can execute the following commands:
-- ls
-- pwd
-- whoami
-- date
-- echo
-- grep
-- exit
-
-## Table of Contents
-(coming soon)
+2. Can execute the following commands:\
+[placeholder]
 
 ## Getting Started
 
+You can find the documentation [here](docs/), with explanations for each file.
+
 # Prerequisites
-1. Linux OS / Ubuntu on Windows
-- This program only works on Linux. If you use Windows, you can download Ubuntu for Windows.
+1. [Linux OS / Ubuntu on Windows](https://ubuntu.com/desktop/wsl)
+- This program only works on Linux. Click on the link for more information about installing Ubuntu on your respective OS.
 2. GCC Compiler
 - Coding in C requires the GCC compiler.
+- You can install GCC on Linux by typing the following on your terminal:
+
+    ```
+    sudo apt install gcc
+    ```
 
 ## Usage
-Upon cloning, type 'make' in the directory of the folder and you will see a "main" executable file.
+Upon cloning, type the command 'make' in the directory of the folder and you will see a "main" executable file.
 
-Type ./main in the same directory to launch the shell.
+Then type ./main in the same directory to launch the shell.
 
 ## Built-in commands
 

@@ -8,10 +8,10 @@
 
 int main()
 {
-    char input[1024];
-    char **tokens;
+    char input[1024]; //accepts a reasonable 1024 characters
+    char **tokens; //dynamic string array
 
-    init_shell();
+    init_shell(); //Starting screen of the shell
     if (chdir("/") != 0) {
         perror("chdir to root failed");
         exit(EXIT_FAILURE);

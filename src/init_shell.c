@@ -24,4 +24,5 @@ void init_shell(void)
     ch = getchar();
 
     tcsetattr(STDIN_FILENO,TCSANOW,&oldt);
+    clearscreen(void);
 }
