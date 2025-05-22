@@ -36,7 +36,7 @@ Type ./main in the same directory to launch the shell.
 
 ## Built-in commands
 
-As of right now, the shell mostly operates from calling the main shell (as seen in the execvp() command in [src/executor.c]).
+As of right now, the shell mostly operates from calling the main shell (as seen in the execvp() command in ["src/executor.c"]).
 
 This shell will soon have its own built-in shell commands.
 
