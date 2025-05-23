@@ -1,5 +1,10 @@
 # Mini Unix shell
 
+## Documentation Contents
+
+1. [Shell Initializer](docs/init_shell.md)
+2. 
+
 ## Project Overview
 ### Description
 A replica of the Unix shell of the Linux Operating System.
