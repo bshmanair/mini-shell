@@ -1,49 +1,29 @@
+#define _GNU_SOURCE //linux-exclusive dynamic buffer resizing -> getline()
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-#include "../include/tokenizer.h"
-#include "../include/executor.h"
-#include "../include/init_shell.h"
 
 int main()
 {
-    char input[1024]; //accepts a reasonable 1024 characters
-    char **tokens; //dynamic string array
-
-    init_shell(); //Starting screen of the shell
-    if (chdir("/") != 0) {
-        perror("chdir to root failed");
-        exit(EXIT_FAILURE);
-    }
-
+    char *input = NULL; //reasonable 1024 bytes acce
+    size_t input_len = 0;
     do
     {
-        printf("\033[0;31mmy-shell $ \033[0m");
-        if (fgets(input, sizeof(input), stdin) == NULL)
+        printf("Enter prompt: ");
+        if (getline(&input,&input_len,stdin) != -1)
         {
-            printf("\n");
-            break;
+            input[strcspn(input,"\n")] = '\0';
         }
-
-        input[strcspn(input, "\n")] = '\0';
-
-        if (strcmp(input, "exit") == 0)
+        else if (input)
         {
-            exit(EXIT_SUCCESS);
+            input[0] = '\0';
         }
-
-        tokens = tokenize(input);
-
-        if (tokens[0] != NULL)
-        {
-            execute(tokens);
-        }
-
-        free_tokens(tokens);
+        printf("%s\n",input);
 
     }
-    while (strcmp(input, "exit") != 0);
+    while(strcmp(input,"exit") != 0);
+    printf("\n\n\nShell terminated. Exiting...\n\n\n");
 
+    free(input);
     return 0;
 }
