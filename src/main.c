@@ -1,11 +1,11 @@
-#define _GNU_SOURCE //linux-exclusive dynamic buffer resizing -> getline()
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 int main()
 {
-    char *input = NULL; //reasonable 1024 bytes acce
+    char *input = NULL;
     size_t input_len = 0;
     do
     {
