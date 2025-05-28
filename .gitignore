@@ -6,3 +6,4 @@ main
 testing.c
 testing
 ./testing
+./.vscode
