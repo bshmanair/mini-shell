@@ -2,23 +2,22 @@ name: Mini Shell CI
 
 on:
   push:
-    branches: [ "core" ]
+    branches: ["core"]
   pull_request:
-    branches: [ "core" ]
+    branches: ["core"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Install build tools
         run: sudo apt-get update && sudo apt-get install -y gcc make
 
-      - name: Build the shell
+      - name: Build mini-shell
         run: make
 
-      - name: Run a basic test
-        run: echo "exit" | ./myshell
+      - name: Run tests
+        run: make test

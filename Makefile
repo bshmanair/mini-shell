@@ -25,3 +25,6 @@ run: $(BIN)
 
 clean:
 	rm -rf $(OBJ_DIR) $(BIN)
+
+test: $(BIN)
+	./test/smoke.sh

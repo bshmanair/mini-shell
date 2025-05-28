@@ -1,18 +1,6 @@
-# Normalize line endings to LF (good for C projects on Linux/macOS)
 * text=auto eol=lf
-
-# Treat C files as text (just to be safe)
 *.c text
 *.h text
 Makefile text
-
-# Make sure shell script-like files are treated as executable text
-*.sh text eol=lf
-
-# GitHub language stats override (optional)
-*.c linguist-language=C
-*.h linguist-language=C
-
-# Ignore generated files in diffs
 myshell -diff
 *.o -diff

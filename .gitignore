@@ -1,19 +1,12 @@
-# Binaries
+# Build artifacts
 myshell
-
-# Object files
 *.o
 obj/
-
-# Build directories
 build/
 
-# Editor/IDE junk
+# Editor/OS junk
 *.swp
 *~
 .vscode/
-*.log
-
-# OS clutter
 .DS_Store
 Thumbs.db
