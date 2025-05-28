@@ -2,13 +2,15 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <string.h>
 #include "../include/executor.h"
+#include "../include/helper.h"
 
 void execute(char **tokens)
 {
-    if(tokens[0] == NULL || strlen(tokens[0]) == 0)
+    if (tokens[0] == NULL || strlen(tokens[0]) == 0)
     {
-        free_tokens
+        free_tokens(tokens);
     }
 
     pid_t pid = fork();
