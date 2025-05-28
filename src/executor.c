@@ -8,7 +8,7 @@ void execute(char **tokens)
 {
     if(tokens[0] == NULL || strlen(tokens[0]) == 0)
     {
-        
+        free_tokens
     }
 
     pid_t pid = fork();
