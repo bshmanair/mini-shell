@@ -1,9 +1,19 @@
-*.exe
-*.out
-TODO.md
-main
-./test
-testing.c
-testing
-./testing
-./.vscode
+# Binaries
+myshell
+
+# Object files
+*.o
+obj/
+
+# Build directories
+build/
+
+# Editor/IDE junk
+*.swp
+*~
+.vscode/
+*.log
+
+# OS clutter
+.DS_Store
+Thumbs.db
