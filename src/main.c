@@ -7,9 +7,11 @@
 #include "../include/executor.h"
 #include "../include/parser.h"
 #include "../include/helper.h"
+#include "../include/init.h"
 
 int main(void)
 {
+    init_shell();
     char *input = NULL;
     size_t input_len = 0;
     char *path;
