@@ -3,6 +3,10 @@ myshell
 *.o
 obj/
 build/
+testing.c
+test.c
+testing
+test
 
 # Editor/OS junk
 *.swp

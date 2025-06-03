@@ -13,35 +13,39 @@ int main(void)
 {
     init_shell();
     char *input = NULL;
+    char *path = NULL;
+    char **tokens = NULL;
     size_t input_len = 0;
-    char *path;
-    char **tokens;
-    while (1)
+    do
     {
+        //Prompt display
         path = getcwd(NULL, 0);
         if (path != NULL)
         {
-            printf("\nYou are currently in: %s\n", path);
+            printf("\e[31m\nYou are currently in: %s\n\e[0m", path);
             free(path);
         }
         else
         {
             perror("getcwd error");
         }
-
-        printf("Enter prompt: ");
+        
+        //User enters prompt
+        printf("\e[31mEnter prompt: \e[0m");
         if (getline(&input, &input_len, stdin) == -1)
         {
             printf("End of file detected. Exiting...\n");
             break;
         }
-
+        
+        //Parsing stage
         tokens = parse(input);
         if (tokens[0] != NULL)
         {
-            execute(tokens);
+            execute(tokens,input,strlen(input)); //TODO: Fix execute() parameter passing
         }
     }
+    while(strcmp(tokens[0],"exit") != 0);
 
     printf("\n\n\nShell terminated. Exiting...\n\n\n");
 
