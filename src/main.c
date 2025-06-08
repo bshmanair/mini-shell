@@ -18,7 +18,7 @@ int main(void)
     size_t input_len = 0;
     do
     {
-        //Prompt display
+        // Prompt display
         path = getcwd(NULL, 0);
         if (path != NULL)
         {
@@ -29,23 +29,22 @@ int main(void)
         {
             perror("getcwd error");
         }
-        
-        //User enters prompt
+
+        // User enters prompt
         printf("\e[31mEnter prompt: \e[0m");
         if (getline(&input, &input_len, stdin) == -1)
         {
             printf("End of file detected. Exiting...\n");
             break;
         }
-        
-        //Parsing stage
+
+        // Parsing stage
         tokens = parse(input);
         if (tokens[0] != NULL)
         {
-            execute(tokens,input,strlen(input)); //TODO: Fix execute() parameter passing
+            execute(tokens, input, strlen(input)); // TODO: Fix execute() parameter passing
         }
-    }
-    while(strcmp(tokens[0],"exit") != 0);
+    } while (strcmp(tokens[0], "exit") != 0);
 
     printf("\n\n\nShell terminated. Exiting...\n\n\n");
 

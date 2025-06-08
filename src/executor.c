@@ -8,7 +8,7 @@
 
 void execute(char **tokens, char *input, size_t tokenCount)
 {
-    if(strcmp(tokens[0],"exit") == 0)
+    if (strcmp(tokens[0], "exit") == 0)
     {
         return;
     }
@@ -21,8 +21,8 @@ void execute(char **tokens, char *input, size_t tokenCount)
 
     if (pid == 0)
     {
-        //TODO: De-wrap shell
-        if (strcmp(tokens[0],"cd") == 0)
+        // TODO: De-wrap shell
+        if (strcmp(tokens[0], "cd") == 0)
         {
             system(input);
         }
@@ -30,7 +30,7 @@ void execute(char **tokens, char *input, size_t tokenCount)
         {
             system(input);
         }
-        perror("my-shell"); //for debugging
+        perror("my-shell"); // for debugging
         exit(1);
     }
     else if (pid > 0)
