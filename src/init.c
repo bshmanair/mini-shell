@@ -8,7 +8,6 @@
 void init_shell()
 {
     struct termios oldt, newt;
-    int ch;
 
     tcgetattr(STDIN_FILENO, &oldt);
     newt = oldt;
@@ -21,7 +20,7 @@ void init_shell()
     printf("Username: %s\n", username);
     printf("\nPress any key to continue...\n");
 
-    ch = getchar();
+    getchar();
 
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
 }

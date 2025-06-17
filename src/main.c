@@ -11,11 +11,13 @@
 
 int main(void)
 {
-    init_shell();
     char *input = NULL;
     char *path = NULL;
     char **tokens = NULL;
     size_t input_len = 0;
+
+    init_shell();
+
     do
     {
         // Prompt display
@@ -42,7 +44,7 @@ int main(void)
         tokens = parse(input);
         if (tokens[0] != NULL)
         {
-            execute(tokens, input, strlen(input)); // TODO: Fix execute() parameter passing
+            execute(tokens); // TODO: Fix execute() parameter passing
         }
     } while (strcmp(tokens[0], "exit") != 0);
 

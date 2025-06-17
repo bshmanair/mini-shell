@@ -3,6 +3,8 @@
         "stdio.h": "c",
         "unistd.h": "c",
         "stdlib.h": "c",
-        "tokenizer.h": "c"
+        "tokenizer.h": "c",
+        "parser.h": "c",
+        "string.h": "c"
     }
 }

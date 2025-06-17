@@ -7,6 +7,7 @@ testing.c
 test.c
 testing
 test
+output/
 
 # Editor/OS junk
 *.swp

@@ -3,18 +3,44 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <string.h>
+#include <assert.h>
 #include "../include/executor.h"
 #include "../include/helper.h"
 
-void execute(char **tokens, char *input, size_t tokenCount)
+void execute(char **tokens)
 {
+    // Edge cases
+    if (tokens[0] == NULL || strlen(tokens[0]) == 0)
+    {
+        free_tokens(tokens);
+    }
+
+    // Stuff that shouldn't get in pid_t mess...
     if (strcmp(tokens[0], "exit") == 0)
     {
         return;
     }
-    if (tokens[0] == NULL || strlen(tokens[0]) == 0)
+
+    if (strcmp(tokens[0], "cd") == 0)
     {
-        free_tokens(tokens);
+        if (tokens[1] == NULL)
+        {
+            fprintf(stderr, "cd: missing argument\n");
+        }
+        else
+        {
+            if (chdir(tokens[1]) != 0)
+            {
+                perror("cd error");
+            }
+            else
+            {
+                char *cwd = getcwd(NULL, 0);
+                printf("Changed directory to: %s\n", cwd);
+                free(cwd);
+            }
+            return;
+        }
     }
 
     pid_t pid = fork();
@@ -22,15 +48,8 @@ void execute(char **tokens, char *input, size_t tokenCount)
     if (pid == 0)
     {
         // TODO: De-wrap shell
-        if (strcmp(tokens[0], "cd") == 0)
-        {
-            system(input);
-        }
-        else
-        {
-            system(input);
-        }
-        perror("my-shell"); // for debugging
+        execvp(tokens[0], tokens);
+        // perror("my-shell"); // for debugging
         exit(1);
     }
     else if (pid > 0)

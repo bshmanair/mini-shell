@@ -1,6 +1,6 @@
 #ifndef EXECUTOR_H
 #define EXECUTOR_H
 
-void execute(char **tokens, char *input, size_t tokenCount);
+void execute(char **tokens);
 
 #endif
