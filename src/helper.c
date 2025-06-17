@@ -33,3 +33,19 @@ char *join(char **tokens)
     }
     return joined;
 }
+
+char *substring(const char *src, int start, int length)
+{
+    if (start < 0 || length < 0 || start + length > strlen(src))
+    {
+        return NULL;
+    }
+    char *sub = (char *)malloc(length + 1);
+    if (!sub)
+    {
+        return NULL;
+    }
+    strncpy(sub, src + start, length);
+    sub[length] = '\0';
+    return sub;
+}
