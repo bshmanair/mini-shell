@@ -7,6 +7,10 @@
 
 void init_shell()
 {
+    if (!isatty(STDIN_FILENO))
+    {
+        return;
+    }
     struct termios oldt, newt;
 
     tcgetattr(STDIN_FILENO, &oldt);
@@ -17,6 +21,10 @@ void init_shell()
 
     clearscreen();
     char *username = getenv("USER");
+    if (username == NULL)
+    {
+        username = "unknown";
+    }
     printf("Username: %s\n", username);
     printf("\nPress any key to continue...\n");
 

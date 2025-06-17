@@ -26,18 +26,23 @@ void execute(char **tokens)
     {
         if (tokens[1] == NULL) // need to have autoconversion from ~ or ~/
         {
-            char *path = "/home/";
-            strcat(path, getpwuid(getuid()));
-            if (chdir(path) != 0)
+            struct passwd *pw = getpwuid(getuid());
+            if (pw == NULL)
+            {
+                perror("getpwuid failed");
+                return;
+            }
+            const char *home = pw->pw_dir;
+            if (chdir(home) != 0)
             {
                 perror("cd error");
                 exit(1);
             }
             else
             {
-                printf("Changed directory to %s\n", path);
-                return 0;
+                printf("Changed directory to %s\n", home);
             }
+            return;
         }
         else
         {

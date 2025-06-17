@@ -20,7 +20,8 @@ int main(void)
 
     do
     {
-        // Prompt display
+        // TODO: fix "cd ~" and "cd ~/"
+        //  Prompt display
         path = getcwd(NULL, 0);
         if (path != NULL)
         {

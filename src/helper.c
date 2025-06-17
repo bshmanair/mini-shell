@@ -34,7 +34,7 @@ char *join(char **tokens)
     return joined;
 }
 
-char *substring(const char *src, int start, int length)
+char *substring(const char *src, int start, int length) // MUST BE USED IN A VARIABLE OTHERWISE MEMORY LEAK
 {
     if (start < 0 || length < 0 || start + length > strlen(src))
     {
