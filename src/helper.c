@@ -14,7 +14,7 @@ void free_tokens(char **tokens)
 }
 
 // rejoin tokens together
-char *join(char **tokens)
+char *rejoin(char **tokens)
 {
     char *joined = NULL;
     for (int i = 0; tokens[i] != NULL; i++)
@@ -48,4 +48,22 @@ char *substring(const char *src, int start, int length) // MUST BE USED IN A VAR
     strncpy(sub, src + start, length);
     sub[length] = '\0';
     return sub;
+}
+
+char *merge(char *a, char *b)
+{
+    int len = (int)(strlen(a) + strlen(b));
+    int len1 = (int)strlen(a);
+    int len2 = (int)strlen(b);
+    char *new = (char *)malloc(len * sizeof(char) + 1);
+    for (int i = 0; i < len1; i++)
+    {
+        new[i] = a[i];
+    }
+    for (int i = 0; i < len2; i++)
+    {
+        new[len1 + i] = b[i];
+    }
+    new[len] = '\0';
+    return new;
 }

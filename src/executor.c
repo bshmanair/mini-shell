@@ -66,7 +66,7 @@ void execute(char **tokens)
     if (pid == 0)
     {
         // TODO: De-wrap shell
-        execvp(tokens[0], tokens);
+        execve(merge("/bin/", tokens[0]), tokens, NULL);
         // perror("my-shell"); // for debugging
         exit(1);
     }
