@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <sys/types.h>
 #include "../include/executor.h"
 #include "../include/parser.h"
 #include "../include/helper.h"
@@ -12,56 +11,38 @@
 int main(void)
 {
     char *input = NULL;
-    char *path = NULL;
     char **tokens = NULL;
     size_t input_len = 0;
 
     init_shell();
 
-    do
+    while (1)
     {
-        //  Prompt display
-        path = getcwd(NULL, 0);
-        if (path != NULL)
-        {
-            printf("\e[31m\nYou are currently in: %s\n\e[0m", path);
-            free(path);
-        }
-        else
-        {
-            perror("getcwd error");
-        }
-
-        // User enters prompt
-        printf("\e[31mEnter prompt: \e[0m");
+        printf("\e[31mMVP Shell > \e[0m");
         if (getline(&input, &input_len, stdin) == -1)
         {
-            printf("End of file detected. Exiting...\n");
+            printf("\nEOF received. Exiting...\n");
             break;
         }
 
-        // Parsing stage
         tokens = parse(input);
-        if (tokens[0] != NULL && strcmp(tokens[0], "exit") == 0)
+        if (tokens == NULL || tokens[0] == NULL)
+        {
+            free_tokens(tokens);
+            continue;
+        }
+
+        if (strcmp(tokens[0], "exit") == 0)
         {
             free_tokens(tokens);
             break;
         }
-        if (tokens[0] != NULL)
-        {
-            execute(tokens);
-            free_tokens(tokens);
-        }
-    } while (strcmp(tokens[0], "exit") != 0);
 
-    printf("\n\n\nShell terminated. Exiting...\n\n\n");
-
-    for (int i = 0; tokens[i] != NULL; i++)
-    {
-        free(tokens[i]);
+        execute(tokens);
+        free_tokens(tokens);
     }
-    free(tokens);
 
     free(input);
+    printf("Shell terminated. Exiting...\n");
     return 0;
 }

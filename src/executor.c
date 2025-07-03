@@ -13,7 +13,6 @@ void execute(char **tokens)
     // Edge cases
     if (tokens[0] == NULL || strlen(tokens[0]) == 0)
     {
-        free_tokens(tokens);
         return;
     }
 
