@@ -14,11 +14,6 @@ void execute(char **tokens)
     if (tokens[0] == NULL || strlen(tokens[0]) == 0)
     {
         free_tokens(tokens);
-    }
-
-    // Stuff that shouldn't get in pid_t mess...
-    if (strcmp(tokens[0], "exit") == 0)
-    {
         return;
     }
 
@@ -61,21 +56,24 @@ void execute(char **tokens)
         }
     }
 
+    char *bash_cmd = rejoin(tokens);
     pid_t pid = fork();
 
     if (pid == 0)
     {
-        // TODO: De-wrap shell
-        execve(merge("/bin/", tokens[0]), tokens, NULL);
-        // perror("my-shell"); // for debugging
+        char *args[] = {"bash", "-c", bash_cmd, NULL};
+        execvp("bash", args);
+        // perror("execvp failed"); // for debugging
         exit(1);
     }
     else if (pid > 0)
     {
         wait(NULL);
+        free(bash_cmd);
     }
     else
     {
         perror("Fork failed");
+        free(bash_cmd);
     }
 }

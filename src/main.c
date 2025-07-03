@@ -20,7 +20,6 @@ int main(void)
 
     do
     {
-        // TODO: fix "cd ~" and "cd ~/"
         //  Prompt display
         path = getcwd(NULL, 0);
         if (path != NULL)
@@ -43,9 +42,15 @@ int main(void)
 
         // Parsing stage
         tokens = parse(input);
+        if (tokens[0] != NULL && strcmp(tokens[0], "exit") == 0)
+        {
+            free_tokens(tokens);
+            break;
+        }
         if (tokens[0] != NULL)
         {
-            execute(tokens); // TODO: Fix execute() parameter passing
+            execute(tokens);
+            free_tokens(tokens);
         }
     } while (strcmp(tokens[0], "exit") != 0);
 
