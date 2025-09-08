@@ -15,7 +15,8 @@ char **parse(char *input)
         }
     }
 
-    char **tokens = (char **)malloc(sizeof(char *) * (token_count + 1));
+    // typecasting optional
+    char **tokens = malloc(sizeof(char *) * (token_count + 1));
     if (tokens == NULL)
     {
         printf("Malloc error");

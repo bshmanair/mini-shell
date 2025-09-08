@@ -40,7 +40,7 @@ char *substring(const char *src, int start, int length) // MUST BE USED IN A VAR
     {
         return NULL;
     }
-    char *sub = (char *)malloc(length + 1);
+    char *sub = malloc(length + 1);
     if (!sub)
     {
         return NULL;
@@ -55,7 +55,7 @@ char *merge(char *a, char *b)
     int len = (int)(strlen(a) + strlen(b));
     int len1 = (int)strlen(a);
     int len2 = (int)strlen(b);
-    char *new = (char *)malloc(len * sizeof(char) + 1);
+    char *new = malloc(len * sizeof(char) + 1);
     for (int i = 0; i < len1; i++)
     {
         new[i] = a[i];
